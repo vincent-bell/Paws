@@ -25,7 +25,7 @@ FHDEF tuple *conv_iasm_file (char *fname);
 #define MAX_LINE_SZ 20
 
 tuple parse_token_as_op (String_View token, size_t position, int line_no) {
-    tuple sz_zero_tuple; // temporary solution...
+    tuple sz_zero_tuple;
     sz_zero_tuple.size = 0;
     
     char token_str[MAX_LINE_SZ];

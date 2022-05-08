@@ -9,8 +9,7 @@
 #include <interpreter.h>
 #include <files.h>
 
-#define MAX_PROG_SZ 10
-#define USAGE "Usage: ./paws examples/myfile.iasm\n"
+#define USAGE "./paws examples/myfile.iasm\n"
 
 void debug (tuple *program, char *mode) {
     if (strcmp(mode, "-d") == 0) {
@@ -25,7 +24,7 @@ int main (int argc, char **argv) {
     static tuple *program;
 
     if (argc < 2) {
-        fprintf(stderr, USAGE);
+        fprintf(stderr, "Usage: %s ", USAGE);
         fflush(stderr);
         exit(1);
     }
@@ -35,6 +34,5 @@ int main (int argc, char **argv) {
         debug(program, argv[2]);
     }
     interpret_program(program);
-    test();
     return 0;
 }

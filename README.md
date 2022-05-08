@@ -6,9 +6,11 @@
 ## Usage
 Make sure you have gcc installed so that you can run `make` inside this repository.  
 
-Use `./paws examples/myfile.iasm` with your command shell from inside the directory where *paws.exe* is located.  
+Use `./paws examples/program.iasm` with your command shell from inside the directory where *paws.exe* is located.  
 
-Remember that `Makefile` builds *paws.exe* so you can't run ./paws before making it with the gcc compiler.
+Remember that `Makefile` builds *paws.exe* so you can't run ./paws before making it with the gcc compiler.  
+
+You can also add an optional -d flag to activate debugging mode for a program if you want.
 
 ## Examples  
 If you need a reference for writing programs in the paws programming language refer to the examples folder [here](https://github.com/vincent-bell/Paws-Programming-Language/tree/main/examples)

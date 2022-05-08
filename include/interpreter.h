@@ -8,7 +8,6 @@
 #define INDEF
 #endif // INDEF
 
-tuple program[10];
 INDEF void interpret_program (tuple *program);
 
 #endif // INTERPRETER_H_
