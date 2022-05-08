@@ -1,15 +1,27 @@
-#ifndef INTERPRETER_H_FILE
-#define INTERPRETER_H_FILE
+#ifndef INTERPRETER_H_
+#define INTERPRETER_H_
 
 #include <stdio.h>
-#include <operations.h>
+#include <stdlib.h>
 
-void interpret_program (tuple *program, int total_ops) {
+#ifndef INDEF
+#define INDEF
+#endif // INDEF
+
+tuple program[10];
+INDEF void interpret_program (tuple *program);
+
+#endif // INTERPRETER_H_
+
+#ifdef SC_IMPLEMENTATION
+
+void interpret_program (tuple *program) {
     int stackPtr = 0;
     signed int stack[64]; // currently the simulator supports a maximum of 64 values on the stack at any given time
     size_t stack_sz = 0;
 
-    for (int i = 0; i < total_ops; i++) {
+    int i = 0;
+    while (program[i].size > 0 && i < 10) {
         signed int operation = program[i].values[0];
         if (operation == LFAST32) {
             if (stack_sz > 0) {
@@ -36,9 +48,15 @@ void interpret_program (tuple *program, int total_ops) {
             stack[stackPtr] = 0;
             stack_sz = stack_sz - 4;
             stackPtr--;
+        } else if (operation == IVT_FAIL) {
+            if (program[i].values[1] == 100) {
+                printf("Invalid token error [100]\n");
+            }
+            exit(1);
         } else {
             printf("Failed to handle unknown opcode %d\n", program[i].values[0]);
         }
+        i++;
     }
 }
 

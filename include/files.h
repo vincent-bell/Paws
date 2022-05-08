@@ -1,0 +1,103 @@
+#ifndef FILES_H_
+#define FILES_H_
+
+#define SV_IMPLEMENTATION
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+#include <sv.h>
+
+#ifndef FHDEF
+#define FHDEF
+#endif // FHDEF
+
+FHDEF tuple parse_token_as_op (String_View token, size_t position, int line_no);
+FHDEF tuple lex_line (char *line, int line_no);
+FHDEF tuple *conv_iasm_file (char *fname, tuple *program);
+
+#endif // FILES_H_
+
+#ifdef FH_IMPLEMENTATION
+
+#define MAX_PROG_SZ 10
+#define MAX_LINE_SZ 20
+
+tuple parse_token_as_op (String_View token, size_t position, int line_no) {
+    tuple size_zero_tuple;
+    size_zero_tuple.size = 0;
+    for (int i = 0; i < 5; i++) {
+        size_zero_tuple.values[i] = 0;
+    }
+    
+    char token_str[MAX_LINE_SZ];
+    sprintf(token_str, ""SV_Fmt"", SV_Arg(token));
+    if (position > 0) {
+        return LOAD_FAST(atoi(token_str));
+    } else if (strcmp(token_str, "S232_ADDH") == 0) {
+        return S232_ADDH();
+    } else if (strcmp(token_str, "S232_SUBH") == 0) {
+        return S232_SUBH();
+    } else if (strcmp(token_str, "S232_MULH") == 0) {
+        return S232_MULH();
+    } else if (strcmp(token_str, "OUTPUT64") == 0) {
+        return OUTPUT64();
+    } else if (strcmp(token_str, "LOAD_FAST") == 0) {
+        return size_zero_tuple;
+    } else {
+        fprintf(stderr, "[Fatal] Unknown token found in file: "SV_Fmt" (line %d, col %zu)\n\n", SV_Arg(token), line_no, position);
+        return IVT_ERROR(100);
+    }
+}
+
+tuple lex_line (char *line, int line_no) {
+    tuple refTuple;
+    char tfix[MAX_LINE_SZ];
+    strncpy(tfix, line, MAX_LINE_SZ);
+
+    String_View source = SV(tfix);
+    const char *start = source.data;
+
+    source = sv_trim_left(source);
+    while (source.count > 0) {
+        String_View token = sv_chop_by_delim(&source, ' ');
+        size_t token_pos = token.data - start;
+        refTuple = parse_token_as_op(token, token_pos, line_no);
+        if (refTuple.size > 0) {
+            return refTuple;
+        }
+        source = sv_trim_left(source);
+    }
+    return refTuple;
+}
+
+tuple *conv_iasm_file (char *fname, tuple *program) {
+    char buf[MAX_LINE_SZ];
+
+    // initialize the program
+    for (int i = 0; i < MAX_PROG_SZ; i++) {
+        for (int j = 0; j < 5; j++) {
+            program[i].values[j] = 0;
+        }
+        program[i].size = 0;
+    }
+
+
+    FILE *fptr = fopen(fname, "r");
+    if (fptr == NULL) {
+        fprintf(stderr, "Failed to find file %s\n", fname);
+        exit(1);
+    }
+    int ln = 0;
+    while (fgets(buf, MAX_LINE_SZ, fptr)) {
+        buf[strcspn(buf, "\n")] = 0;
+        program[ln] = lex_line(buf, ln);
+        ln++;
+    }
+    fclose(fptr);
+
+    return program;
+}
+
+#endif // FH_IMPLEMENTATION
