@@ -19,7 +19,7 @@ LCDEF void compile_program (tuple *program, char *target_filename);
 void compile_program (tuple *program, char *target_filename) {
     FILE *fptr = fopen(target_filename, "w");
     if (fptr == NULL) {
-        fprintf(stderr, "Failed to find the file %s", target_filename);
+        fprintf(stderr, "Failed to find the file %s\n", target_filename);
         fflush(stderr);
         exit(1);
     }
@@ -93,6 +93,7 @@ void compile_program (tuple *program, char *target_filename) {
                 break;
         }
     }
+
     fprintf(fptr, "   mov rax, 60\n");
     fprintf(fptr, "   mov rdi, 0\n");
     fprintf(fptr, "   syscall\n");

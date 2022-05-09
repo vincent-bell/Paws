@@ -1,6 +1,7 @@
 // define the implementations necessary for the header libraries
 #define OP_IMPLEMENTATION 
 #define SC_IMPLEMENTATION
+#define WC_IMPLEMENTATION
 #define LC_IMPLEMENTATION
 #define FH_IMPLEMENTATION
 
@@ -8,12 +9,13 @@
 #include <stdio.h>
 #include <operations.h>
 #include <interpreter.h>
+#include <wcompiler.h>
 #include <lcompiler.h>
 #include <files.h>
 
 #define USAGE "./paws action args -flags"
 
-enum retcodes {SIM_W_NDEBUG, SIM_W_DEBUG, CMP_W_NDEBUG, NIM_ERROR};
+enum retcodes {SIM_W_NDEBUG, SIM_W_DEBUG, LCMP_W_NDEBUG, WCMP_W_NDEBUG, NIM_ERROR};
 
 void debug (tuple *program, char *mode) {
     if (strcmp(mode, "-d") == 0) {
@@ -51,7 +53,9 @@ int evaluate_cmd_args (int argc, char **argv) {
             }
         case 5:
             if (strcmp(argv[1], "compile") == 0) {
-                return CMP_W_NDEBUG;
+                return LCMP_W_NDEBUG;
+            } else if (strcmp(argv[1], "wcompile") == 0) {
+                return WCMP_W_NDEBUG;
             } else {
                 return NIM_ERROR;
             }
@@ -66,7 +70,6 @@ int main (int argc, char **argv) {
     static tuple *program;
 
     int ret = evaluate_cmd_args(argc, argv);
-
     switch (ret) {
         case SIM_W_NDEBUG:
             program = conv_iasm_file(argv[2]);
@@ -77,9 +80,13 @@ int main (int argc, char **argv) {
             debug(program, argv[3]);
             simulate_program(program);
             return 0;
-        case CMP_W_NDEBUG:
+        case LCMP_W_NDEBUG:
             program = conv_iasm_file(argv[2]);
             compile_program(program, argv[4]);
+            return 0;
+        case WCMP_W_NDEBUG:
+            program = conv_iasm_file(argv[2]);
+            wcompile_program(program, argv[4]);
             return 0;
         case NIM_ERROR:
             fprintf(stderr, "[paws] An unknown error occured...\n");

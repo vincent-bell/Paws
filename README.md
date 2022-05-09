@@ -13,6 +13,7 @@ Once you have built *paws.exe* you can run `./paws` and you should get a respons
 
 	./paws simulate path/to/myfile.iasm -d (optional debugging mode)
 	./paws compile path/to/myfile.iasm -o path/to/myassembly.asm
+	./paws wcompile path/to/myfile.iasm -o path/to/myprogram.c
 
 **What does the simulate command do?**  
 The program simulator built into Paws currently takes some input file (.iasm), interprets the file and outputs some result.  
