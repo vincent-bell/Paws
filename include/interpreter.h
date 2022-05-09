@@ -8,19 +8,36 @@
 #define INDEF
 #endif // INDEF
 
-INDEF void interpret_program (tuple *program);
+INDEF void simulate_program (tuple *program);
+INDEF void debug_stack (signed int *stack, int pointer);
+INDEF signed int *init_stack (void);
 
 #endif // INTERPRETER_H_
 
 #ifdef SC_IMPLEMENTATION
 
-void interpret_program (tuple *program) {
+// maybe use this function later
+void debug_stack (signed int *stack, int pointer) {
+    for (int i = 0; i < 10; i++) {
+        printf("stack[%d] (stackPtr=%d) = %d\n", i, pointer, stack[i]);
+    }
+}
+
+signed int *init_stack (void) {
+    static signed int stack[64];
+    for (int i = 0; i < 64; i++) {
+        stack[i] = 0;
+    }
+    return stack;
+}
+
+void simulate_program (tuple *program) {
     int stackPtr = 0;
-    signed int stack[64]; // currently the simulator supports a maximum of 64 values on the stack at any given time
+    signed int *stack = init_stack(); // currently the simulator supports a maximum of 64 values on the virtual stack at any given time
     size_t stack_sz = 0;
 
     int i = 0;
-    while (program[i].size > 0 && i < 10) {
+    while (program[i].size > 0 && i < 32) {
         signed int operation = program[i].values[0];
         if (operation == LFAST32) {
             if (stack_sz > 0) {

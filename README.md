@@ -1,16 +1,27 @@
 # Paws Programming Language
-![alt text](https://previews.123rf.com/images/savo/savo1901/savo190100032/126589110-kontur-kinderhase-einfache-zeichnung-tier.jpg)
+![alt text](https://i.gyazo.com/5473c574147282351870b0be55dbff8c.png)
 ### Paws aims to be a user-friendly, easy to learn, high-level programming langauge which offers the ability to both compile and interpret your scripts.  
 ### The langauge will be written mostly in C and hopes to support  both Windows and Linux users. In the future this language may support MacOS as well but currently it does not.
 
-## Usage
+## Building the Executable to Run Paws
 Make sure you have gcc installed so that you can run `make` inside this repository.  
 
-Use `./paws examples/program.iasm` with your command shell from inside the directory where *paws.exe* is located.  
+Remember that the `Makefile` builds *paws.exe* so you can't run ./paws before making it with the gcc compiler.  
 
-Remember that `Makefile` builds *paws.exe* so you can't run ./paws before making it with the gcc compiler.  
+## Commands  
+Once you have built *paws.exe* you can run `./paws` and you should get a response like `Usage: ./paws action args -flags`  
 
-You can also add an optional -d flag to activate debugging mode for a program if you want.
+	./paws simulate path/to/myfile.iasm -d (optional debugging mode)
+	./paws compile path/to/myfile.iasm -o path/to/myassembly.asm
+
+**What does the simulate command do?**  
+The program simulator built into Paws currently takes some input file (.iasm), interprets the file and outputs some result.  
+
+**What does the compile command do?**  
+The compiler built into Paws currently takes some input file (.iasm) and compiles it to x86_64 assembly (.asm)    
+
+In the future this assembly file will be built into an executable file on linux systems.  
+For Windows users we will instead build a C file with native paws assembly instructions.
 
 ## Examples  
 If you need a reference for writing programs in the paws programming language refer to the examples folder [here](https://github.com/vincent-bell/Paws-Programming-Language/tree/main/examples)

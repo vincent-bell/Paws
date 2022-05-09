@@ -21,7 +21,7 @@ FHDEF tuple *conv_iasm_file (char *fname);
 
 #ifdef FH_IMPLEMENTATION
 
-#define MAX_PROG_SZ 10
+#define MAX_PROG_SZ 32
 #define MAX_LINE_SZ 20
 
 tuple parse_token_as_op (String_View token, size_t position, int line_no) {
@@ -59,8 +59,8 @@ tuple lex_line (char *line, int line_no) {
     source = sv_trim_left(source);
     while (source.count > 0) {
         String_View token = sv_chop_by_delim(&source, ' ');
-        size_t token_pos = token.data - start;
-        refTuple = parse_token_as_op(token, token_pos, line_no);
+        size_t col = token.data - start;
+        refTuple = parse_token_as_op(token, col, line_no);
         if (refTuple.size > 0) {
             return refTuple;
         }
@@ -85,6 +85,7 @@ tuple *conv_iasm_file (char *fname) {
     FILE *fptr = fopen(fname, "r");
     if (fptr == NULL) {
         fprintf(stderr, "Failed to find file %s\n", fname);
+        fflush(stderr);
         exit(1);
     }
     while (fgets(buf, MAX_LINE_SZ, fptr)) {
