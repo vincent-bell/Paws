@@ -82,7 +82,7 @@ int main (int argc, char **argv) {
             return 0;
         case LCMP_W_NDEBUG:
             program = conv_iasm_file(argv[2]);
-            compile_program(program, argv[4]);
+            lcompile_program(program, argv[4]);
             return 0;
         case WCMP_W_NDEBUG:
             program = conv_iasm_file(argv[2]);

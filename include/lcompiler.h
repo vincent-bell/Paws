@@ -16,7 +16,7 @@ LCDEF void compile_program (tuple *program, char *target_filename);
 
 // expect ./paws compile examples/program1.iasm -o examples/
 
-void compile_program (tuple *program, char *target_filename) {
+LCDEF void lcompile_program (tuple *program, char *target_filename) {
     FILE *fptr = fopen(target_filename, "w");
     if (fptr == NULL) {
         fprintf(stderr, "Failed to find the file %s\n", target_filename);

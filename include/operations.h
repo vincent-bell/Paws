@@ -26,7 +26,7 @@ OPDEF tuple IVT_ERROR (int errid);
 
 #ifdef OP_IMPLEMENTATION
 
-tuple init_tuple (void) {
+OPDEF tuple init_tuple (void) {
     tuple refTuple;
     for (int i = 0; i < 5; i++) {
         refTuple.values[i] = 0;
@@ -35,7 +35,7 @@ tuple init_tuple (void) {
     return refTuple;
 }
 
-tuple LOAD_FAST (long long value) {
+OPDEF tuple LOAD_FAST (long long value) {
     tuple refTuple = init_tuple();
     if (LONG_MIN < value && value < LONG_MAX) {
         refTuple.values[0] = LFAST32;
@@ -49,35 +49,35 @@ tuple LOAD_FAST (long long value) {
     return refTuple;
 }
 
-tuple S232_ADDH (void) {
+OPDEF tuple S232_ADDH (void) {
     tuple refTuple = init_tuple();
     refTuple.values[0] = S232_PLUS;
     refTuple.size = 4;
     return refTuple;
 }
 
-tuple S232_SUBH (void) {
+OPDEF tuple S232_SUBH (void) {
     tuple refTuple = init_tuple();
     refTuple.values[0] = S232_MINUS;
     refTuple.size = 4;
     return refTuple;
 }
 
-tuple S232_MULH (void) {
+OPDEF tuple S232_MULH (void) {
     tuple refTuple = init_tuple();
     refTuple.values[0] = S232_MULTIPLY;
     refTuple.size = 4;
     return refTuple;
 }
 
-tuple OUTPUT64 (void) {
+OPDEF tuple OUTPUT64 (void) {
     tuple refTuple = init_tuple();
     refTuple.values[0] = DUMP64;
     refTuple.size = 4;
     return refTuple;
 }
 
-tuple IVT_ERROR (int errid) {
+OPDEF tuple IVT_ERROR (int errid) {
     tuple refTuple = init_tuple();
     refTuple.values[0] = IVT_FAIL;
     refTuple.values[1] = errid; // error code

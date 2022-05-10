@@ -17,13 +17,13 @@ INDEF signed int *init_stack (void);
 #ifdef SC_IMPLEMENTATION
 
 // maybe use this function later
-void debug_stack (signed int *stack, int pointer) {
+INDEF void debug_stack (signed int *stack, int pointer) {
     for (int i = 0; i < 10; i++) {
         printf("stack[%d] (stackPtr=%d) = %d\n", i, pointer, stack[i]);
     }
 }
 
-signed int *init_stack (void) {
+INDEF signed int *init_stack (void) {
     static signed int stack[64];
     for (int i = 0; i < 64; i++) {
         stack[i] = 0;
@@ -31,7 +31,7 @@ signed int *init_stack (void) {
     return stack;
 }
 
-void simulate_program (tuple *program) {
+INDEF void simulate_program (tuple *program) {
     int stackPtr = 0;
     signed int *stack = init_stack(); // currently the simulator supports a maximum of 64 values on the virtual stack at any given time
     size_t stack_sz = 0;

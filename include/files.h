@@ -24,7 +24,7 @@ FHDEF tuple *conv_iasm_file (char *fname);
 #define MAX_PROG_SZ 32
 #define MAX_LINE_SZ 20
 
-tuple parse_token_as_op (String_View token, size_t position, int line_no) {
+FHDEF tuple parse_token_as_op (String_View token, size_t position, int line_no) {
     tuple sz_zero_tuple;
     sz_zero_tuple.size = 0;
     
@@ -48,7 +48,7 @@ tuple parse_token_as_op (String_View token, size_t position, int line_no) {
     }
 }
 
-tuple lex_line (char *line, int line_no) {
+FHDEF tuple lex_line (char *line, int line_no) {
     tuple refTuple;
     char tfix[MAX_LINE_SZ];
     strncpy(tfix, line, MAX_LINE_SZ);
@@ -69,7 +69,7 @@ tuple lex_line (char *line, int line_no) {
     return refTuple;
 }
 
-tuple *conv_iasm_file (char *fname) {
+FHDEF tuple *conv_iasm_file (char *fname) {
     static tuple program[MAX_PROG_SZ];
     char buf[MAX_LINE_SZ];
     int line = 0;

@@ -2,6 +2,7 @@
 #define WCOMPILER_H_
 
 #include <stdio.h>
+#include <process.h>
 #include <assert.h>
 
 #ifndef WCDEF
@@ -9,12 +10,27 @@
 #endif // WCDEF
 
 WCDEF void wcompile_program (tuple *program, char *target_filename);
+WCDEF void conv_c2exe (char *c_filename, char *target_filename);
 
 #endif // WCOMPILER_H_
 
 #ifdef WC_IMPLEMENTATION
 
-void wcompile_program (tuple *program, char *target_filename) {
+WCDEF void conv_c2exe (char *c_filename, char *target_filename) {
+    _execl(
+        "C:\\Users\\vince\\scoop\\apps\\mingw\\current\\bin\\gcc.exe",
+        "C:\\Users\\vince\\scoop\\apps\\mingw\\current\\bin\\gcc.exe",
+        c_filename,
+        "-o",
+        target_filename,
+        "-Iinclude",
+        "-Wall",
+        "-Wextra",
+        NULL
+    );
+}
+
+WCDEF void wcompile_program (tuple *program, char *target_filename) {
     FILE *fptr = fopen(target_filename, "w");
     if (fptr == NULL) {
         fprintf(stderr, "Failed to find the file %s\n", target_filename);
