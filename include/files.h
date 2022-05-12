@@ -43,7 +43,6 @@ FHDEF tuple parse_token_as_op (String_View token, size_t position, int line_no) 
     } else if (strcmp(token_str, "LOAD_FAST") == 0) {
         return sz_zero_tuple;
     } else {
-        fprintf(stderr, "[Fatal] Unknown token found in file: "SV_Fmt" (line %d, col %zu)\n\n", SV_Arg(token), line_no, position);
         return IVT_ERROR(100);
     }
 }

@@ -12,17 +12,15 @@ Remember that the `Makefile` builds *paws.exe* so you can't run ./paws before ma
 Once you have built *paws.exe* you can run `./paws` and you should get a response like `Usage: ./paws action args -flags`  
 
 	./paws simulate path/to/myfile.iasm -d (optional debugging mode)
-	./paws compile path/to/myfile.iasm -o path/to/myassembly.asm
+	./paws lcompile path/to/myfile.iasm -o path/to/myassembly.asm
 	./paws wcompile path/to/myfile.iasm -o path/to/myprogram.c
 
 **What does the simulate command do?**  
 The program simulator built into Paws currently takes some input file (.iasm), interprets the file and outputs some result.  
 
 **What does the compile command do?**  
-The compiler built into Paws currently takes some input file (.iasm) and compiles it to x86_64 assembly (.asm)    
-
-In the future this assembly file will be built into an executable file on linux systems.  
-For Windows users we will instead build a C file with native paws assembly instructions.
+The Linux compiler built into Paws currently takes some input file (.iasm) and compiles it to x86_64 assembly (.asm)    
+The Windows compiler built into Paws currently takes some input file (.iasm) and compiles it to C (.c)
 
 ## Examples  
 If you need a reference for writing programs in the paws programming language refer to the examples folder [here](https://github.com/vincent-bell/Paws-Programming-Language/tree/main/examples)

@@ -17,6 +17,11 @@
 
 enum retcodes {SIM_W_NDEBUG, SIM_W_DEBUG, LCMP_W_NDEBUG, WCMP_W_NDEBUG, NIM_ERROR};
 
+typedef struct retObj {
+    int retcode;
+    char *msg;
+} retObj;
+
 void debug (tuple *program, char *mode) {
     if (strcmp(mode, "-d") == 0) {
         for (int i = 0; i < 32; i++) {
@@ -25,52 +30,68 @@ void debug (tuple *program, char *mode) {
     }
 }
 
-int evaluate_cmd_args (int argc, char **argv) {
+retObj evaluate_cmd_args (int argc, char **argv) {
+    retObj ret = {};
     if (argc < 3) {
         fprintf(stderr, "Usage: %s ", USAGE);
         fflush(stderr);
         exit(1);
     }
 
-    // need to implement some strong error return structure here without idea change
     switch (argc) {
         case 3:
             if (strcmp(argv[1], "simulate") == 0) {
-                return SIM_W_NDEBUG;
+                ret.retcode = SIM_W_NDEBUG;
+                return ret;
             } else {
-                return NIM_ERROR;
+                ret.retcode = NIM_ERROR;
+                sprintf(ret.msg, "Unknown subcommand %s", argv[1]);
+                return ret;
             }
             break;
         case 4:
             if (strcmp(argv[1], "simulate") == 0) {
                 if (strcmp(argv[3], "-d") == 0) {
-                    return SIM_W_DEBUG;
+                    ret.retcode = SIM_W_DEBUG;
+                    return ret;
                 } else {
-                    return NIM_ERROR;
+                    ret.retcode = NIM_ERROR;
+                    sprintf(ret.msg, "Unknown option %s", argv[3]);
+                    return ret;
                 }
             } else {
-                return NIM_ERROR;
+                ret.retcode = NIM_ERROR;
+                sprintf(ret.msg, "Unknown subcommand %s", argv[1]);
+                return ret;
             }
         case 5:
-            if (strcmp(argv[1], "compile") == 0) {
-                return LCMP_W_NDEBUG;
+            if (strcmp(argv[1], "lcompile") == 0) {
+                ret.retcode = LCMP_W_NDEBUG;
+                return ret;
             } else if (strcmp(argv[1], "wcompile") == 0) {
-                return WCMP_W_NDEBUG;
+                ret.retcode = WCMP_W_NDEBUG;
+                return ret;
             } else {
-                return NIM_ERROR;
+                ret.retcode = NIM_ERROR;
+                sprintf(ret.msg, "Unknown subcommand %s", argv[1]);
+                return ret;
             }
         default:
-            return NIM_ERROR;
+            ret.retcode = NIM_ERROR;
+            sprintf(ret.msg, "Unknown subcommand %s", argv[1]);
+            return ret;
     }
-    return NIM_ERROR;
+    ret.retcode = NIM_ERROR;
+    sprintf(ret.msg, "Unknown subcommand %s", argv[1]);
+    return ret;
 }
 
 // main program
 int main (int argc, char **argv) {
     static tuple *program;
 
-    int ret = evaluate_cmd_args(argc, argv);
-    switch (ret) {
+    retObj ret = evaluate_cmd_args(argc, argv);
+    switch (ret.retcode) {
         case SIM_W_NDEBUG:
             program = conv_iasm_file(argv[2]);
             simulate_program(program);

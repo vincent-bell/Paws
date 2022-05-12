@@ -1,2 +1,2 @@
 default:
-	gcc main.c -o paws.exe -Iinclude -Wall -Wextra
+	gcc main.c -o paws.exe -Iinclude -Wall
