@@ -1,5 +1,4 @@
 // define the implementations necessary for the header libraries
-#define OP_IMPLEMENTATION 
 #define SC_IMPLEMENTATION
 #define WC_IMPLEMENTATION
 #define LC_IMPLEMENTATION

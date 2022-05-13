@@ -9,8 +9,8 @@
 #define WCDEF
 #endif // WCDEF
 
-WCDEF void wcompile_program (tuple *program, char *target_filename);
 WCDEF void conv_c2exe (char *c_filename, char *target_filename);
+WCDEF void wcompile_program (tuple *program, char *target_filename);
 
 #endif // WCOMPILER_H_
 

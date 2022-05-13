@@ -1,30 +1,12 @@
-#ifndef FILES_H_
-#define FILES_H_
-
-#define SV_IMPLEMENTATION
-
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include <operations.h>
+#define SV_IMPLEMENTATION
 #include <sv.h>
 
-#ifndef FHDEF
-#define FHDEF
-#endif // FHDEF
-
-FHDEF tuple parse_token_as_op (String_View token, size_t position, int line_no);
-FHDEF tuple lex_line (char *line, int line_no);
-FHDEF tuple *conv_iasm_file (char *fname);
-
-#endif // FILES_H_
-
-#ifdef FH_IMPLEMENTATION
-
-#define MAX_PROG_SZ 32
 #define MAX_LINE_SZ 20
+#define MAX_PROG_SZ 64
 
-FHDEF tuple parse_token_as_op (String_View token, size_t position, int line_no) {
+tuple parse_token_as_op (String_View token, size_t position) {
     tuple sz_zero_tuple;
     sz_zero_tuple.size = 0;
     
@@ -47,7 +29,7 @@ FHDEF tuple parse_token_as_op (String_View token, size_t position, int line_no) 
     }
 }
 
-FHDEF tuple lex_line (char *line, int line_no) {
+tuple lex_line (char *line) {
     tuple refTuple;
     char tfix[MAX_LINE_SZ];
     strncpy(tfix, line, MAX_LINE_SZ);
@@ -59,7 +41,7 @@ FHDEF tuple lex_line (char *line, int line_no) {
     while (source.count > 0) {
         String_View token = sv_chop_by_delim(&source, ' ');
         size_t col = token.data - start;
-        refTuple = parse_token_as_op(token, col, line_no);
+        refTuple = parse_token_as_op(token, col);
         if (refTuple.size > 0) {
             return refTuple;
         }
@@ -68,7 +50,7 @@ FHDEF tuple lex_line (char *line, int line_no) {
     return refTuple;
 }
 
-FHDEF tuple *conv_iasm_file (char *fname) {
+tuple *conv_iasm_file (char *fname) {
     static tuple program[MAX_PROG_SZ];
     char buf[MAX_LINE_SZ];
     int line = 0;
@@ -89,12 +71,10 @@ FHDEF tuple *conv_iasm_file (char *fname) {
     }
     while (fgets(buf, MAX_LINE_SZ, fptr)) {
         buf[strcspn(buf, "\n")] = 0;
-        program[line] = lex_line(buf, line);
+        program[line] = lex_line(buf);
         line++;
     }
     fclose(fptr);
 
     return program;
 }
-
-#endif // FH_IMPLEMENTATION
