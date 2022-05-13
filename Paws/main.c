@@ -1,8 +1,5 @@
 // define the implementations necessary for the header libraries
-#define SC_IMPLEMENTATION
-#define WC_IMPLEMENTATION
 #define LC_IMPLEMENTATION
-#define FH_IMPLEMENTATION
 
 // include the header libraries
 #include <stdio.h>
