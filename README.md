@@ -1,5 +1,5 @@
 # Paws Programming Language
-![alt text](https://i.gyazo.com/5473c574147282351870b0be55dbff8c.png)
+![alt text](https://i.gyazo.com/cb69d02fa9c830478ed395012d8e7a75.png)
 ### Paws aims to be a user-friendly, easy to learn, high-level programming langauge which offers the ability to both compile and interpret your scripts.  
 ### The langauge will be written mostly in C and hopes to support  both Windows and Linux users. In the future this language may support MacOS as well but currently it does not.
 
@@ -11,12 +11,12 @@ Remember that the `Makefile` builds *paws.exe* so you can't run ./paws before ma
 ## Commands  
 Once you have built *paws.exe* you can run `./paws` and you should get a response like `Usage: ./paws action args -flags`  
 
-	./paws simulate path/to/myfile.iasm -d (optional debugging mode)
-	./paws lcompile path/to/myfile.iasm -o path/to/myassembly.asm
-	./paws wcompile path/to/myfile.iasm -o path/to/myprogram.c
+	./paws simulate path/to/input.iasm -d (optional debugging mode)
+	./paws lcompile path/to/input.iasm -o path/to/output.asm
+	./paws wcompile path/to/input.iasm -o path/to/output.c
 
 **What does the simulate command do?**  
-The program simulator built into Paws currently takes some input file (.iasm), interprets the file and outputs some result.  
+The program simulator built into Paws currently takes some input file (.iasm) and attempts to run the code inside using a virtual stack.
 
 **What does the compile command do?**  
 The Linux compiler built into Paws currently takes some input file (.iasm) and compiles it to x86_64 assembly (.asm)    
@@ -27,7 +27,7 @@ If you need a reference for writing programs in the paws programming language re
 
 ## Assembly Instruction Set
 	LOAD_FAST (signed int value)
-	~ Loads a signed 32 bit integer directly onto the stack.
+	~ Loads a signed 32 bit signed integer directly onto the stack.
 
 	S232_ADDH (void)
 	~ Pops two values from the top of the stack and adds them together. The result is then loaded onto the stack.

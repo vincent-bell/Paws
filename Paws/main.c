@@ -1,6 +1,3 @@
-// define the implementations necessary for the header libraries
-#define LC_IMPLEMENTATION
-
 // include the header libraries
 #include <stdio.h>
 #include <operations.h>
@@ -18,15 +15,30 @@ typedef struct retObj {
     char *msg;
 } retObj;
 
-void debug (tuple *program, char *mode) {
-    if (strcmp(mode, "-d") == 0) {
-        for (int i = 0; i < 32; i++) {
-            printf("program[%d] (size %zu) = (%d, %d)\n", i, program[i].size, program[i].values[0], program[i].values[1]);
+char *getTupleContents (size_t size, signed int *ptr) {
+    if (ptr == NULL) {
+        return "NOP";
+    } else {
+        char *ret_string = (char *) malloc(sizeof(size)+1);
+        if (size < 8) {
+            sprintf(ret_string, "(%d, )", ptr[0]);
+            return ret_string;
+        } else {
+            sprintf(ret_string, "(%d, %d)", ptr[0], ptr[1]);
+            return ret_string;
         }
     }
 }
 
-retObj evaluate_cmd_args (int argc, char **argv) {
+void debug (tuple *program, char *mode) {
+    if (strcmp(mode, "-d") == 0) {
+        for (int i = 0; i < 32; i++) {
+            printf("program[%d] (size %zu) = %s\n", i, program[i].size, getTupleContents(program[i].size, program[i].ptr));
+        }
+    }
+}
+
+retObj evaluateCmdArgs (int argc, char **argv) {
     retObj ret = {};
     if (argc < 3) {
         fprintf(stderr, "Usage: %s ", USAGE);
@@ -86,7 +98,7 @@ retObj evaluate_cmd_args (int argc, char **argv) {
 int main (int argc, char **argv) {
     static tuple *program;
 
-    retObj ret = evaluate_cmd_args(argc, argv);
+    retObj ret = evaluateCmdArgs(argc, argv);
     switch (ret.retcode) {
         case SIM_W_NDEBUG:
             program = conv_iasm_file(argv[2]);

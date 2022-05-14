@@ -25,9 +25,6 @@ void wcompile_program (tuple *program, char *target_filename) {
         exit(1);
     }
 
-    fprintf(fptr, "// define the implementations necessary for the header libraries\n");
-    fprintf(fptr, "#define OP_IMPLEMENTATION\n");
-    fprintf(fptr, "#define SC_IMPLEMENTATION\n\n");
     fprintf(fptr, "// include the header libraries\n");
     fprintf(fptr, "#include <stdio.h>\n");
     fprintf(fptr, "#include <operations.h>\n");
@@ -37,27 +34,31 @@ void wcompile_program (tuple *program, char *target_filename) {
 
     int i = 0;
     while (program[i].size > 0 && i < 64) {
-        signed int operation = program[i].values[0];
-        i++;
-        int lf = i - 1;
+        signed int operation = program[i].ptr[0];
         assert(OP_COUNT == 6 && "The number of operations is currently out of sync");
         switch (operation) {
             case LFAST32:
-                fprintf(fptr, "    program[%d] = LOAD_FAST(%d);\n", lf, program[lf].values[1]);
+                fprintf(fptr, "    program[%d] = LOAD_FAST(%d);\n", i, program[i].ptr[1]);
+                free(program[i].ptr);
                 break;
             case S232_PLUS:
-                fprintf(fptr, "    program[%d] = S232_ADDH();\n", lf);
+                fprintf(fptr, "    program[%d] = S232_ADDH();\n", i);
+                free(program[i].ptr);
                 break;
             case S232_MINUS:
-                fprintf(fptr, "    program[%d] = S232_SUBH();\n", lf);
+                fprintf(fptr, "    program[%d] = S232_SUBH();\n", i);
+                free(program[i].ptr);
                 break;
             case S232_MULTIPLY:
-                fprintf(fptr, "    program[%d] = S232_MULH();\n", lf);
+                fprintf(fptr, "    program[%d] = S232_MULH();\n", i);
+                free(program[i].ptr);
                 break;
             case DUMP64:
-                fprintf(fptr, "    program[%d] = OUTPUT64();\n", lf);
+                fprintf(fptr, "    program[%d] = OUTPUT64();\n", i);
+                free(program[i].ptr);
                 break;
         }
+        i++;
     }
 
     fprintf(fptr, "    simulate_program(program);\n");

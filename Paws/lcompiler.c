@@ -50,35 +50,40 @@ void lcompile_program (tuple *program, char *target_filename) {
 
     int i = 0;
     while (program[i].size > 0 && i < 32) {
-        signed int operation = program[i].values[0];
+        signed int operation = program[i].ptr[0];
         i++;
         int lf = i - 1;
         assert(OP_COUNT == 6 && "The number of operations is currently out of sync");
         switch (operation) {
             case LFAST32:
-                fprintf(fptr, "   push %d\n", program[lf].values[1]);
+                fprintf(fptr, "   push %d\n", program[lf].ptr[1]);
+                free(program[lf].ptr);
                 break;
             case S232_PLUS:
                 fprintf(fptr, "   pop rax\n");
                 fprintf(fptr, "   pop rbx\n");
                 fprintf(fptr, "   add rax, rbx\n");
                 fprintf(fptr, "   push rax\n");
+                free(program[lf].ptr);
                 break;
             case S232_MINUS:
                 fprintf(fptr, "   pop rax\n");
                 fprintf(fptr, "   pop rbx\n");
                 fprintf(fptr, "   sub rbx, rax\n");
                 fprintf(fptr, "   push rbx\n");
+                free(program[lf].ptr);
                 break;
             case S232_MULTIPLY:
                 fprintf(fptr, "   pop rax\n");
                 fprintf(fptr, "   pop rbx\n");
                 fprintf(fptr, "   mul rbx\n");
                 fprintf(fptr, "   push rax\n");
+                free(program[lf].ptr);
                 break;
             case DUMP64:
                 fprintf(fptr, "   pop rdi\n");
                 fprintf(fptr, "   call dump\n");
+                free(program[lf].ptr);
                 break;
         }
     }

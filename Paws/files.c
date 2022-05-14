@@ -51,17 +51,10 @@ tuple lex_line (char *line) {
 }
 
 tuple *conv_iasm_file (char *fname) {
-    static tuple program[MAX_PROG_SZ];
+    static tuple program[MAX_PROG_SZ]; 
+    // program = (tuple *) malloc(MAX_PROG_SZ * sizeof(long long));
     char buf[MAX_LINE_SZ];
     int line = 0;
-
-    // initialize the program
-    for (int i = 0; i < MAX_PROG_SZ; i++) {
-        for (int j = 0; j < 5; j++) {
-            program[i].values[j] = 0;
-        }
-        program[i].size = 0;
-    }
 
     FILE *fptr = fopen(fname, "r");
     if (fptr == NULL) {

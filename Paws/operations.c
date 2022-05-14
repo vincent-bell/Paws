@@ -1,61 +1,59 @@
+#include <stdio.h>
 #include <operations.h>
 #include <limits.h>
 
-tuple init_tuple (void) {
-    tuple refTuple;
-    for (int i = 0; i < 5; i++) {
-        refTuple.values[i] = 0;
-    }
-    refTuple.size = 0;
-    return refTuple;
-}
-
 tuple LOAD_FAST (long long value) {
-    tuple refTuple = init_tuple();
+    tuple refTuple;
+    refTuple.ptr = malloc(2 * sizeof(signed int));
     if (LONG_MIN < value && value < LONG_MAX) {
-        refTuple.values[0] = LFAST32;
-        refTuple.values[1] = value;
-        refTuple.size = 8;
+        refTuple.ptr[0] = LFAST32;
+        refTuple.ptr[1] = value;
+        refTuple.size = 2 * sizeof(signed int);
     } else {
-        refTuple.values[0] = LFAST32;
-        refTuple.values[1] = 0;
-        refTuple.size = 8;
+        refTuple.ptr[0] = LFAST32;
+        refTuple.ptr[1] = 0;
+        refTuple.size = 2 * sizeof(signed int);
     }
     return refTuple;
 }
 
 tuple S232_ADDH (void) {
-    tuple refTuple = init_tuple();
-    refTuple.values[0] = S232_PLUS;
-    refTuple.size = 4;
+    tuple refTuple;
+    refTuple.ptr = malloc(sizeof(signed int));
+    refTuple.ptr[0] = S232_PLUS;
+    refTuple.size = sizeof(signed int);
     return refTuple;
 }
 
 tuple S232_SUBH (void) {
-    tuple refTuple = init_tuple();
-    refTuple.values[0] = S232_MINUS;
-    refTuple.size = 4;
+    tuple refTuple;
+    refTuple.ptr = malloc(sizeof(signed int));
+    refTuple.ptr[0] = S232_MINUS;
+    refTuple.size = sizeof(signed int);
     return refTuple;
 }
 
 tuple S232_MULH (void) {
-    tuple refTuple = init_tuple();
-    refTuple.values[0] = S232_MULTIPLY;
-    refTuple.size = 4;
+    tuple refTuple;
+    refTuple.ptr = malloc(sizeof(signed int));
+    refTuple.ptr[0] = S232_MULTIPLY;
+    refTuple.size = sizeof(signed int);
     return refTuple;
 }
 
 tuple OUTPUT64 (void) {
-    tuple refTuple = init_tuple();
-    refTuple.values[0] = DUMP64;
-    refTuple.size = 4;
+    tuple refTuple;
+    refTuple.ptr = malloc(sizeof(signed int));
+    refTuple.ptr[0] = DUMP64;
+    refTuple.size = sizeof(signed int);
     return refTuple;
 }
 
 tuple IVT_ERROR (int errid) {
-    tuple refTuple = init_tuple();
-    refTuple.values[0] = IVT_FAIL;
-    refTuple.values[1] = errid; // error code
-    refTuple.size = 8;
+    tuple refTuple;
+    refTuple.ptr = malloc(2 * sizeof(signed int));
+    refTuple.ptr[0] = IVT_FAIL;
+    refTuple.ptr[1] = errid; // error code
+    refTuple.size = 2 * sizeof(signed int);
     return refTuple;
 }
