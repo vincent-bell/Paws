@@ -1,5 +1,8 @@
-# Paws Programming Language
-![alt text](https://i.gyazo.com/cb69d02fa9c830478ed395012d8e7a75.png)
+<h1 align="center">Paws Programming Language</h1>
+<p align="center" width="100%">
+    <img width="33%" src="https://i.gyazo.com/8fedf7ab7c7014fd20a8b07d85834bbe.png">
+</p>
+
 ### Paws aims to be a user-friendly, easy to learn, high-level programming langauge which offers the ability to both compile and interpret your scripts.  
 ### The langauge will be written mostly in C and hopes to support  both Windows and Linux users. In the future this language may support MacOS as well but currently it does not.
 
