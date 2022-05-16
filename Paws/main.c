@@ -136,7 +136,7 @@ int main (int argc, char **argv) {
         case SIM_W_DEBUG:
             program = conv_iasm_file(argv[2]);
             debug(program, argv[3]);
-            // simulate_program(program);
+            simulate_program(program);
             return 0;
         case LCMP_W_NDEBUG:
             program = conv_iasm_file(argv[2]);

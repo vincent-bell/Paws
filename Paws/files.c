@@ -3,18 +3,16 @@
 #define SV_IMPLEMENTATION
 #include <sv.h>
 
-#define MAX_LINE_SZ 22
+#define MAX_LINE_SZ 23
 #define MAX_PROG_SZ 64
 
 tuple parse_token_as_op (String_View token, size_t position) {
-    tuple sz_zero_tuple;
-    sz_zero_tuple.size = 0;
-    
+    tuple sz_zero_t;
+    sz_zero_t.size = 0;
+
     char token_str[MAX_LINE_SZ];
     sprintf(token_str, ""SV_Fmt"", SV_Arg(token));
-    printf("EVALUATING STRING: \"%s\"\n", token_str);
     if (position > 0) {
-        // Try to load a long long or check strlen?...
         char *end = (char *) malloc(sizeof(char) * MAX_LINE_SZ);
         long long ifs = strtoll(token_str, &end, 10);
         return LOAD_FAST(ifs);
@@ -27,7 +25,7 @@ tuple parse_token_as_op (String_View token, size_t position) {
     } else if (strcmp(token_str, "OUTPUT64") == 0) {
         return OUTPUT64();
     } else if (strcmp(token_str, "LOAD_FAST") == 0) {
-        return sz_zero_tuple;
+        return sz_zero_t;
     } else {
         return IVT_ERROR(100);
     }
@@ -56,7 +54,6 @@ tuple lex_line (char *line) {
 
 tuple *conv_iasm_file (char *fname) {
     static tuple program[MAX_PROG_SZ]; 
-    // program = (tuple *) malloc(MAX_PROG_SZ * sizeof(long long));
     char buf[MAX_LINE_SZ];
     int line = 0;
 
