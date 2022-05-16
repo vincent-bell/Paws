@@ -3,7 +3,7 @@
 #define SV_IMPLEMENTATION
 #include <sv.h>
 
-#define MAX_LINE_SZ 20
+#define MAX_LINE_SZ 22
 #define MAX_PROG_SZ 64
 
 tuple parse_token_as_op (String_View token, size_t position) {
@@ -12,8 +12,12 @@ tuple parse_token_as_op (String_View token, size_t position) {
     
     char token_str[MAX_LINE_SZ];
     sprintf(token_str, ""SV_Fmt"", SV_Arg(token));
+    printf("EVALUATING STRING: \"%s\"\n", token_str);
     if (position > 0) {
-        return LOAD_FAST(atoi(token_str));
+        // Try to load a long long or check strlen?...
+        char *end = (char *) malloc(sizeof(char) * MAX_LINE_SZ);
+        long long ifs = strtoll(token_str, &end, 10);
+        return LOAD_FAST(ifs);
     } else if (strcmp(token_str, "S232_ADDH") == 0) {
         return S232_ADDH();
     } else if (strcmp(token_str, "S232_SUBH") == 0) {

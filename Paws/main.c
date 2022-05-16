@@ -1,5 +1,8 @@
 // include the header libraries
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <string.h>
 #include <operations.h>
 #include <interpreter.h>
 #include <wcompiler.h>
@@ -12,28 +15,54 @@ enum retcodes {SIM_W_NDEBUG, SIM_W_DEBUG, LCMP_W_NDEBUG, WCMP_W_NDEBUG, NIM_ERRO
 
 typedef struct retObj {
     int retcode;
-    char *msg;
+    char msg[91];
 } retObj;
 
+// MALLOC/REALLOC BUG NEEDS FIXING
+// TRY IMPLEMENTING WITH STRLEN FROM "string.h"?
 char *getTupleContents (size_t size, signed int *ptr) {
     if (ptr == NULL) {
         return "NOP";
     } else {
-        char *ret_string = (char *) malloc(sizeof(size)+1);
-        if (size < 8) {
-            sprintf(ret_string, "(%d, )", ptr[0]);
-            return ret_string;
-        } else {
-            sprintf(ret_string, "(%d, %d)", ptr[0], ptr[1]);
-            return ret_string;
+        char *ret_string = (char *) malloc(sizeof(char) + 1);
+        strcpy(ret_string, "("); // ret_string[2] = "(\0"
+        size_t i = 0;
+        while (i < size/4 - 1) {
+            char tmp[13] = {};
+            switch (i) {
+                case 0:
+                    ret_string = (char *) realloc(ret_string, sizeof(char) * 10 * (i+1) + 2);
+                    break;
+                default:
+                    ret_string = (char *) realloc(ret_string, sizeof(char) * 10 * i + 2);
+                    break;
+            }
+            sprintf(tmp, "%d, ", *(ptr + i));
+            strncat(ret_string, tmp, 13);
+            i++;
         }
+        switch (i) {
+            case 0:
+                ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 12 + 2 + 1);
+                break;
+            default:
+                ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 12 + 2 + 1);
+                break;
+        }
+        char tmp[13] = {};
+        sprintf(tmp, "%d)", *(ptr + i));
+        strncat(ret_string, tmp, 13);
+        return ret_string;
     }
 }
 
+// REWRITE A WHILE LOOP FOR THIS FUNCTION
 void debug (tuple *program, char *mode) {
     if (strcmp(mode, "-d") == 0) {
         for (int i = 0; i < 32; i++) {
-            printf("program[%d] (size %zu) = %s\n", i, program[i].size, getTupleContents(program[i].size, program[i].ptr));
+            char *tuple = getTupleContents(program[i].size, program[i].ptr);
+            printf("program[%d] (size %zu) = %s\n", i, program[i].size, tuple);
+            free(tuple);
         }
     }
 }
@@ -107,7 +136,7 @@ int main (int argc, char **argv) {
         case SIM_W_DEBUG:
             program = conv_iasm_file(argv[2]);
             debug(program, argv[3]);
-            simulate_program(program);
+            // simulate_program(program);
             return 0;
         case LCMP_W_NDEBUG:
             program = conv_iasm_file(argv[2]);
