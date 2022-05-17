@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string.h>
 #include <operations.h>
 #include <interpreter.h>
 #include <wcompiler.h>
@@ -19,16 +18,16 @@ typedef struct retObj {
 } retObj;
 
 // MALLOC/REALLOC BUG NEEDS FIXING
-// TRY IMPLEMENTING WITH STRLEN FROM "string.h"?
 char *getTupleContents (size_t size, signed int *ptr) {
     if (ptr == NULL) {
         return "NOP";
     } else {
         char *ret_string = (char *) malloc(sizeof(char) + 1);
-        strcpy(ret_string, "("); // ret_string[2] = "(\0"
+        strcpy(ret_string, "(");
+
         size_t i = 0;
         while (i < size/4 - 1) {
-            char tmp[13] = {};
+            char *tmp = (char *) malloc(sizeof(char) * 13);
             switch (i) {
                 case 0:
                     ret_string = (char *) realloc(ret_string, sizeof(char) * 10 * (i+1) + 2);
@@ -39,30 +38,35 @@ char *getTupleContents (size_t size, signed int *ptr) {
             }
             sprintf(tmp, "%d, ", *(ptr + i));
             strncat(ret_string, tmp, 13);
+            free(tmp);
             i++;
         }
+
         switch (i) {
             case 0:
-                ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 12 + 2 + 1);
+                ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 13 + 2 + 1);
                 break;
             default:
-                ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 12 + 2 + 1);
+                ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 13 + 2 + 1);
                 break;
         }
+
         char tmp[13] = {};
         sprintf(tmp, "%d)", *(ptr + i));
         strncat(ret_string, tmp, 13);
+        // printf("SIZEOF(\"%s\"): %zu ACTUAL ALLOC: %zu\n", ret_string, strlen(ret_string), ...);
         return ret_string;
     }
 }
 
-// REWRITE A WHILE LOOP FOR THIS FUNCTION
 void debug (tuple *program, char *mode) {
     if (strcmp(mode, "-d") == 0) {
-        for (int i = 0; i < 32; i++) {
+        int i = 0;
+        while (program[i].size != 0) {
             char *tuple = getTupleContents(program[i].size, program[i].ptr);
             printf("program[%d] (size %zu) = %s\n", i, program[i].size, tuple);
             free(tuple);
+            i++;
         }
     }
 }
