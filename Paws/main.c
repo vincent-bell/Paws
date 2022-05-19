@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <operations.h>
 #include <interpreter.h>
 #include <wcompiler.h>
@@ -17,44 +18,39 @@ typedef struct retObj {
     char msg[91];
 } retObj;
 
-// MALLOC/REALLOC BUG NEEDS FIXING
 char *getTupleContents (size_t size, signed int *ptr) {
     if (ptr == NULL) {
         return "NOP";
     } else {
         char *ret_string = (char *) malloc(sizeof(char) + 1);
         strcpy(ret_string, "(");
-
         size_t i = 0;
         while (i < size/4 - 1) {
-            char *tmp = (char *) malloc(sizeof(char) * 13);
-            switch (i) {
-                case 0:
-                    ret_string = (char *) realloc(ret_string, sizeof(char) * 10 * (i+1) + 2);
-                    break;
-                default:
-                    ret_string = (char *) realloc(ret_string, sizeof(char) * 10 * i + 2);
-                    break;
-            }
-            sprintf(tmp, "%d, ", *(ptr + i));
+            char strnum[11];
+            sprintf(strnum, "%d", *(ptr + i));
+            size_t numsz = strlen(strnum);
+            char *tmp = (char *) malloc(sizeof(char) * numsz + 2);
+            ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 2);
+            sprintf(tmp, "%s, ", strnum);
             strncat(ret_string, tmp, 13);
             free(tmp);
             i++;
         }
-
+        char strnum[11];
+        sprintf(strnum, "%d", *(ptr + i));
+        size_t fnumsz = strlen(strnum);
+        ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + fnumsz + 3);
+        char tmp[fnumsz+1];
         switch (i) {
             case 0:
-                ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 13 + 2 + 1);
+                sprintf(tmp, "%s, )", strnum);
+                strncat(ret_string, tmp, 15);
                 break;
-            default:
-                ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 13 + 2 + 1);
+            case 1:
+                sprintf(tmp, "%s)", strnum);
+                strncat(ret_string, tmp, 13);
                 break;
         }
-
-        char tmp[13] = {};
-        sprintf(tmp, "%d)", *(ptr + i));
-        strncat(ret_string, tmp, 13);
-        // printf("SIZEOF(\"%s\"): %zu ACTUAL ALLOC: %zu\n", ret_string, strlen(ret_string), ...);
         return ret_string;
     }
 }
