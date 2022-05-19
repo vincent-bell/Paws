@@ -3,20 +3,6 @@
 #include <assert.h>
 #include <operations.h>
 
-void conv_c2exe (char *c_filename, char *target_filename) {
-    _execl(
-        "C:\\Users\\vince\\scoop\\apps\\mingw\\current\\bin\\gcc.exe",
-        "C:\\Users\\vince\\scoop\\apps\\mingw\\current\\bin\\gcc.exe",
-        c_filename,
-        "-o",
-        target_filename,
-        "-Iinclude",
-        "-Wall",
-        "-Wextra",
-        NULL
-    );
-}
-
 void wcompile_program (tuple *program, char *target_filename) {
     FILE *fptr = fopen(target_filename, "w");
     if (fptr == NULL) {
@@ -41,20 +27,20 @@ void wcompile_program (tuple *program, char *target_filename) {
                 fprintf(fptr, "    program[%d] = LOAD_FAST(%d);\n", i, program[i].ptr[1]);
                 free(program[i].ptr);
                 break;
-            case S232_PLUS:
-                fprintf(fptr, "    program[%d] = S232_ADDH();\n", i);
+            case I232_PLUS:
+                fprintf(fptr, "    program[%d] = ADDH();\n", i);
                 free(program[i].ptr);
                 break;
-            case S232_MINUS:
-                fprintf(fptr, "    program[%d] = S232_SUBH();\n", i);
+            case I232_MINUS:
+                fprintf(fptr, "    program[%d] = SUBH();\n", i);
                 free(program[i].ptr);
                 break;
-            case S232_MULTIPLY:
-                fprintf(fptr, "    program[%d] = S232_MULH();\n", i);
+            case I232_MULTIPLY:
+                fprintf(fptr, "    program[%d] = MULH();\n", i);
                 free(program[i].ptr);
                 break;
-            case DUMP64:
-                fprintf(fptr, "    program[%d] = OUTPUT64();\n", i);
+            case I232_DUMP:
+                fprintf(fptr, "    program[%d] = DUMP();\n", i);
                 free(program[i].ptr);
                 break;
         }

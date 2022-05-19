@@ -24,27 +24,27 @@ void simulate_program (tuple *program) {
             }
             stack_sz = stack_sz + 4;
             free(program[i].ptr);
-        } else if (operation == S232_PLUS) {
+        } else if (operation == I232_PLUS) {
             stack[stackPtr-1] = stack[stackPtr] + stack[stackPtr-1];
             stackPtr--;
             stack_sz = stack_sz - 4;
             free(program[i].ptr);
-        } else if (operation == S232_MINUS) {
+        } else if (operation == I232_MINUS) {
             stack[stackPtr-1] = stack[stackPtr-1] - stack[stackPtr];
             stackPtr--;
             stack_sz =  stack_sz - 4;
             free(program[i].ptr);
-        } else if (operation == S232_MULTIPLY) {
+        } else if (operation == I232_MULTIPLY) {
             stack[stackPtr-1] = stack[stackPtr] * stack[stackPtr-1];
             stackPtr--;
             stack_sz = stack_sz - 4;
             free(program[i].ptr);
-        } else if (operation == DUMP64) {
+        } else if (operation == I232_DUMP) {
             printf("%d\n", stack[stackPtr]);
             stack[stackPtr] = 0;
             stack_sz = stack_sz - 4;
             stackPtr--;
-        } else if (operation == IVT_FAIL) {
+        } else if (operation == I232_FAIL) {
             if (program[i].ptr[1] == 100) {
                 printf("Invalid token error [100]\n");
                 free(program[i].ptr);

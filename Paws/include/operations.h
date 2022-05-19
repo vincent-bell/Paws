@@ -9,13 +9,13 @@ typedef struct tuple {
     size_t size;
 } tuple;
 
-enum operations {LFAST32, S232_PLUS, S232_MINUS, S232_MULTIPLY, DUMP64, IVT_FAIL, OP_COUNT};
+enum operations {LFAST32, I232_PLUS, I232_MINUS, I232_MULTIPLY, I232_DUMP, I232_FAIL, OP_COUNT};
 
 tuple LOAD_FAST (long long value);
-tuple S232_ADDH (void);
-tuple S232_SUBH (void);
-tuple S232_MULH (void);
-tuple OUTPUT64 (void);
-tuple IVT_ERROR (int errid);
+tuple ADDH (void);
+tuple SUBH (void);
+tuple MULH (void);
+tuple DUMP (void);
+tuple ERROR (int errid);
 
 #endif // OPERATIONS_H_

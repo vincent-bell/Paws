@@ -17,17 +17,17 @@ tuple parse_token_as_op (String_View token, size_t position) {
         long long ifs = strtoll(token_str, &end, 10);
         return LOAD_FAST(ifs);
     } else if (strcmp(token_str, "S232_ADDH") == 0) {
-        return S232_ADDH();
+        return ADDH();
     } else if (strcmp(token_str, "S232_SUBH") == 0) {
-        return S232_SUBH();
+        return SUBH();
     } else if (strcmp(token_str, "S232_MULH") == 0) {
-        return S232_MULH();
+        return MULH();
     } else if (strcmp(token_str, "OUTPUT64") == 0) {
-        return OUTPUT64();
+        return DUMP();
     } else if (strcmp(token_str, "LOAD_FAST") == 0) {
         return sz_zero_t;
     } else {
-        return IVT_ERROR(100);
+        return ERROR(100);
     }
 }
 

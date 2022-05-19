@@ -59,28 +59,28 @@ void lcompile_program (tuple *program, char *target_filename) {
                 fprintf(fptr, "   push %d\n", program[lf].ptr[1]);
                 free(program[lf].ptr);
                 break;
-            case S232_PLUS:
+            case I232_PLUS:
                 fprintf(fptr, "   pop rax\n");
                 fprintf(fptr, "   pop rbx\n");
                 fprintf(fptr, "   add rax, rbx\n");
                 fprintf(fptr, "   push rax\n");
                 free(program[lf].ptr);
                 break;
-            case S232_MINUS:
+            case I232_MINUS:
                 fprintf(fptr, "   pop rax\n");
                 fprintf(fptr, "   pop rbx\n");
                 fprintf(fptr, "   sub rbx, rax\n");
                 fprintf(fptr, "   push rbx\n");
                 free(program[lf].ptr);
                 break;
-            case S232_MULTIPLY:
+            case I232_MULTIPLY:
                 fprintf(fptr, "   pop rax\n");
                 fprintf(fptr, "   pop rbx\n");
                 fprintf(fptr, "   mul rbx\n");
                 fprintf(fptr, "   push rax\n");
                 free(program[lf].ptr);
                 break;
-            case DUMP64:
+            case I232_DUMP:
                 fprintf(fptr, "   pop rdi\n");
                 fprintf(fptr, "   call dump\n");
                 free(program[lf].ptr);

@@ -32,17 +32,17 @@ If you need a reference for writing programs in the paws programming language re
 	LOAD_FAST (signed int value)
 	~ Loads a signed 32 bit signed integer directly onto the stack.
 
-	S232_ADDH (void)
+	ADDH (void)
 	~ Pops two values from the top of the stack and adds them together. The result is then loaded onto the stack.
 
-	S232_SUBH (void)
+	SUBH (void)
 	~ Pops two values from the top of the stack and subtracts them. The result is then loaded onto the stack.
 
-	S232_MULH (void)
+	MULH (void)
 	~ Pops two values from the top of the stack and multiplies theem together. The result is then loaded onto the stack.
 
-	OUTPUT64 (void)
+	DUMP (void)
 	~ Pops the value at the top of the stack and prints it to stdout.
 
-	IVT_ERROR (int errid)
+	ERROR (int errid)
 	~ Raises an error which prints a message if the error code is recognized. The program then terminates with exit status 1.

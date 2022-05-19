@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <operations.h>
 #include <interpreter.h>
 #include <wcompiler.h>
@@ -20,7 +19,10 @@ typedef struct retObj {
 
 char *getTupleContents (size_t size, signed int *ptr) {
     if (ptr == NULL) {
-        return "NOP";
+        char *ret_string = (char *) malloc(sizeof(char) );
+        tuple refTuple = ERROR(200); //define some error code for this in documentation soon "pointer to tuple values is null"
+        sprintf(ret_string, "(%d, %d)", refTuple.ptr[0], refTuple.ptr[1]);
+        return ret_string;
     } else {
         char *ret_string = (char *) malloc(sizeof(char) + 1);
         strcpy(ret_string, "(");
@@ -46,7 +48,7 @@ char *getTupleContents (size_t size, signed int *ptr) {
                 sprintf(tmp, "%s, )", strnum);
                 strncat(ret_string, tmp, 15);
                 break;
-            case 1:
+            default:
                 sprintf(tmp, "%s)", strnum);
                 strncat(ret_string, tmp, 13);
                 break;
