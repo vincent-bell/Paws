@@ -44,11 +44,13 @@ void simulate_program (tuple *program) {
             stack[stackPtr] = 0;
             stack_sz = stack_sz - 4;
             stackPtr--;
+            free(program[i].ptr);
         } else if (operation == I232_FAIL) {
             if (program[i].ptr[1] == 100) {
                 printf("Invalid token error [100]\n");
                 free(program[i].ptr);
             }
+            free(program[i].ptr);
             exit(1);
         } else {
             printf("Failed to handle unknown opcode %d\n", program[i].ptr[0]);
