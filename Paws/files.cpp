@@ -11,7 +11,7 @@ tuple parse_token_as_op (String_View token, size_t position) {
     sz_zero_t.size = 0;
 
     char token_str[MAX_LINE_SZ];
-    sprintf(token_str, ""SV_Fmt"", SV_Arg(token));
+    sprintf(token_str, "" SV_Fmt "", SV_Arg(token));
     if (position > 0) {
         char *end = (char *) malloc(sizeof(char) * MAX_LINE_SZ);
         long long ifs = strtoll(token_str, &end, 10);
