@@ -16,13 +16,13 @@ tuple parse_token_as_op (String_View token, size_t position) {
         char *end = (char *) malloc(sizeof(char) * MAX_LINE_SZ);
         long long ifs = strtoll(token_str, &end, 10);
         return LOAD_FAST(ifs);
-    } else if (strcmp(token_str, "S232_ADDH") == 0) {
+    } else if (strcmp(token_str, "ADDH") == 0) {
         return ADDH();
-    } else if (strcmp(token_str, "S232_SUBH") == 0) {
+    } else if (strcmp(token_str, "SUBH") == 0) {
         return SUBH();
-    } else if (strcmp(token_str, "S232_MULH") == 0) {
+    } else if (strcmp(token_str, "MULH") == 0) {
         return MULH();
-    } else if (strcmp(token_str, "OUTPUT64") == 0) {
+    } else if (strcmp(token_str, "DUMP") == 0) {
         return DUMP();
     } else if (strcmp(token_str, "LOAD_FAST") == 0) {
         return sz_zero_t;
