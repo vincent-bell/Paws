@@ -1,9 +1,11 @@
+// Paws compiler v0.2.0 alpha
+
 #include <stdio.h>
 #include <process.h>
 #include <assert.h>
 #include <operations.h>
 
-void wcompile_program (tuple *program, char *target_filename) {
+void compile_program (tuple *program, char *target_filename) {
     FILE *fptr = fopen(target_filename, "w");
     if (fptr == NULL) {
         fprintf(stderr, "Failed to find the file %s\n", target_filename);

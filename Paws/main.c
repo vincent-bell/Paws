@@ -4,13 +4,12 @@
 #include <string.h>
 #include <operations.h>
 #include <interpreter.h>
-#include <wcompiler.h>
-#include <lcompiler.h>
+#include <compiler.h>
 #include <files.h>
 
 #define USAGE "./paws action args -flags"
 
-enum retcodes {SIM_W_NDEBUG, SIM_W_DEBUG, LCMP_W_NDEBUG, WCMP_W_NDEBUG, NIM_ERROR};
+enum retcodes {SIM_W_NDEBUG, SIM_W_DEBUG, CMP_W_NDEBUG, NIM_ERROR};
 
 typedef struct retObj {
     int retcode;
@@ -104,11 +103,8 @@ retObj evaluateCmdArgs (int argc, char **argv) {
                 return ret;
             }
         case 5:
-            if (strcmp(argv[1], "lcompile") == 0) {
-                ret.retcode = LCMP_W_NDEBUG;
-                return ret;
-            } else if (strcmp(argv[1], "wcompile") == 0) {
-                ret.retcode = WCMP_W_NDEBUG;
+            if (strcmp(argv[1], "compile") == 0) {
+                ret.retcode = CMP_W_NDEBUG;
                 return ret;
             } else {
                 ret.retcode = NIM_ERROR;
@@ -131,27 +127,28 @@ int main (int argc, char **argv) {
 
     retObj ret = evaluateCmdArgs(argc, argv);
     switch (ret.retcode) {
+
         case SIM_W_NDEBUG:
             program = conv_iasm_file(argv[2]);
             simulate_program(program);
             return 0;
+
         case SIM_W_DEBUG:
             program = conv_iasm_file(argv[2]);
             debug(program, argv[3]);
             simulate_program(program);
             return 0;
-        case LCMP_W_NDEBUG:
+
+        case CMP_W_NDEBUG:
             program = conv_iasm_file(argv[2]);
-            lcompile_program(program, argv[4]);
+            compile_program(program, argv[4]);
             return 0;
-        case WCMP_W_NDEBUG:
-            program = conv_iasm_file(argv[2]);
-            wcompile_program(program, argv[4]);
-            return 0;
+
         case NIM_ERROR:
             fprintf(stderr, "[paws] An unknown error occured...\n");
             fflush(stderr);
             return 1;
+
     }
     return 0;
 }
