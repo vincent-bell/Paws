@@ -4,12 +4,12 @@
 </p>
 
 ### Paws aims to be a user-friendly, easy to learn, high-level programming langauge which offers the ability to both compile and interpret your scripts.  
-### The langauge will be written mostly in C and hopes to support  both Windows and Linux users. In the future this language may support MacOS as well but currently it does not.
+### The langauge will be written mostly in C++ and hopes to support both Windows and Linux users. The native shell currently being designed for Paws is being written in Python.
 
 ## Building the Executable to Run Paws
 Make sure you have gcc installed so that you can run `make` inside this repository.  
 
-Remember that the `Makefile` builds *paws.exe* so you can't run ./paws before making it with the gcc compiler.  
+Remember that the `Makefile` builds *paws.exe* so you can't run ./paws before making it with the gcc/g++ compiler.  
 
 ## Commands  
 Once you have built *paws.exe* you can run `./paws` and you should get a response like `Usage: ./paws action args -flags`  
@@ -22,8 +22,7 @@ Once you have built *paws.exe* you can run `./paws` and you should get a respons
 The program simulator built into Paws currently takes some input file (.iasm) and attempts to run the code inside using a virtual stack.
 
 **What does the compile command do?**  
-The Linux compiler built into Paws currently takes some input file (.iasm) and compiles it to x86_64 assembly (.asm)    
-The Windows compiler built into Paws currently takes some input file (.iasm) and compiles it to C (.c)
+The compiler built into Paws currently takes some input file (.iasm) and compiles it to C (.c)
 
 ## Examples  
 If you need a reference for writing programs in the paws programming language refer to the examples folder [here](https://github.com/vincent-bell/Paws-Programming-Language/tree/main/examples)
