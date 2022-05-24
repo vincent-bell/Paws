@@ -1,7 +1,7 @@
 // include the header libraries
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <operations.h>
 #include <interpreter.h>
 #include <compiler.h>
@@ -42,15 +42,12 @@ char *getTupleContents (size_t size, signed int *ptr) {
         size_t fnumsz = strlen(strnum);
         ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + fnumsz + 3);
         char tmp[fnumsz+1];
-        switch (i) {
-            case 0:
-                sprintf(tmp, "%s, )", strnum);
-                strncat(ret_string, tmp, 15);
-                break;
-            default:
-                sprintf(tmp, "%s)", strnum);
-                strncat(ret_string, tmp, 13);
-                break;
+        if (i == 0) {
+            sprintf(tmp, "%s, )", strnum);
+            strncat(ret_string, tmp, 15);
+        } else {
+            sprintf(tmp, "%s)", strnum);
+            strncat(ret_string, tmp, 13);
         }
         return ret_string;
     }
@@ -60,9 +57,9 @@ void debug (tuple *program, char *mode) {
     if (strcmp(mode, "-d") == 0) {
         int i = 0;
         while (program[i].size != 0) {
-            char *tuple = getTupleContents(program[i].size, program[i].ptr);
-            printf("program[%d] (size %zu) = %s\n", i, program[i].size, tuple);
-            free(tuple);
+            char *strTuple = getTupleContents(program[i].size, program[i].ptr);
+            printf("program[%d] (size %zu) = %s\n", i, program[i].size, strTuple);
+            free(strTuple);
             i++;
         }
     }

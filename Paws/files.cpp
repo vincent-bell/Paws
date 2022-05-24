@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cstdio>
 #include <operations.h>
 #define SV_IMPLEMENTATION
 #include <sv.h>

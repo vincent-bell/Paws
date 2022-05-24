@@ -1,8 +1,7 @@
 #ifndef OPERATIONS_H_
 #define OPERATIONS_H_
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
 
 typedef struct tuple {
     signed int *ptr;

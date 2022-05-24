@@ -1,5 +1,6 @@
-#include <limits.h>
-#include <stdio.h>
+#include <cstdio>
+#include <cstdlib>
+#include <climits>
 #include <operations.h>
 
 tuple LOAD_FAST (long long value) {

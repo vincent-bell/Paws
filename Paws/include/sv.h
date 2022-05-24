@@ -22,11 +22,11 @@
 #ifndef SV_H_
 #define SV_H_
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <ctype.h>
+#include <cstdint>
+#include <cstdlib>
+#include <cstdbool>
+#include <cstring>
+#include <cctype>
 
 #ifndef SVDEF
 #define SVDEF

@@ -1,8 +1,7 @@
 // Paws compiler v0.2.0 alpha
 
-#include <stdio.h>
-#include <process.h>
-#include <assert.h>
+#include <cstdio>
+#include <cassert>
 #include <operations.h>
 
 void compile_program (tuple *program, char *target_filename) {
@@ -27,25 +26,21 @@ void compile_program (tuple *program, char *target_filename) {
         switch (operation) {
             case LFAST32:
                 fprintf(fptr, "    program[%d] = LOAD_FAST(%d);\n", i, program[i].ptr[1]);
-                free(program[i].ptr);
                 break;
             case I232_PLUS:
                 fprintf(fptr, "    program[%d] = ADDH();\n", i);
-                free(program[i].ptr);
                 break;
             case I232_MINUS:
                 fprintf(fptr, "    program[%d] = SUBH();\n", i);
-                free(program[i].ptr);
                 break;
             case I232_MULTIPLY:
                 fprintf(fptr, "    program[%d] = MULH();\n", i);
-                free(program[i].ptr);
                 break;
             case I232_DUMP:
                 fprintf(fptr, "    program[%d] = DUMP();\n", i);
-                free(program[i].ptr);
                 break;
         }
+        free(program[i].ptr);
         i++;
     }
 
