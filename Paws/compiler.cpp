@@ -13,35 +13,41 @@ void compile_program (tuple *program, char *target_filename) {
     }
 
     fprintf(fptr, "// include the header libraries\n");
-    fprintf(fptr, "#include <stdio.h>\n");
+    fprintf(fptr, "#include <cstdio>\n");
     fprintf(fptr, "#include <operations.h>\n");
     fprintf(fptr, "#include <interpreter.h>\n\n");
     fprintf(fptr, "int main (void) {\n");
     fprintf(fptr, "    static tuple program[64];\n");
 
-    int i = 0;
-    while (program[i].size > 0 && i < 64) {
-        signed int operation = program[i].ptr[0];
+    size_t counter = 0;
+    while (program[counter].ptr != NULL) {
+        signed int operation = program[counter].ptr[0];
         assert(OP_COUNT == 6 && "The number of operations is currently out of sync");
         switch (operation) {
+
             case LFAST32:
-                fprintf(fptr, "    program[%d] = LOAD_FAST(%d);\n", i, program[i].ptr[1]);
+                fprintf(fptr, "    program[%zu] = LOAD_FAST(%d);\n", counter, program[counter].ptr[1]);
                 break;
+
             case I232_PLUS:
-                fprintf(fptr, "    program[%d] = ADDH();\n", i);
+                fprintf(fptr, "    program[%zu] = ADDH();\n", counter);
                 break;
+
             case I232_MINUS:
-                fprintf(fptr, "    program[%d] = SUBH();\n", i);
+                fprintf(fptr, "    program[%zu] = SUBH();\n", counter);
                 break;
+
             case I232_MULTIPLY:
-                fprintf(fptr, "    program[%d] = MULH();\n", i);
+                fprintf(fptr, "    program[%zu] = MULH();\n", counter);
                 break;
+
             case I232_DUMP:
-                fprintf(fptr, "    program[%d] = DUMP();\n", i);
+                fprintf(fptr, "    program[%zu] = DUMP();\n", counter);
                 break;
+
         }
-        free(program[i].ptr);
-        i++;
+        free(program[counter].ptr);
+        counter++;
     }
 
     fprintf(fptr, "    simulate_program(program);\n");
