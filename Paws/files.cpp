@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <unistd.h>
 #include <operations.h>
 #define SV_IMPLEMENTATION
 #include <sv.h>
@@ -15,7 +16,7 @@ tuple parse_token_as_op (String_View token, size_t position) {
     if (position > 0) {
         char *end = (char *) malloc(sizeof(char) * MAX_LINE_SZ);
         long long ifs = strtoll(token_str, &end, 10);
-        return LOAD_FAST(ifs);
+        return LOAD_INT(ifs);
     } else if (strcmp(token_str, "ADDH") == 0) {
         return ADDH();
     } else if (strcmp(token_str, "SUBH") == 0) {
@@ -24,7 +25,7 @@ tuple parse_token_as_op (String_View token, size_t position) {
         return MULH();
     } else if (strcmp(token_str, "DUMP") == 0) {
         return DUMP();
-    } else if (strcmp(token_str, "LOAD_FAST") == 0) {
+    } else if (strcmp(token_str, "LOAD_INT") == 0) {
         return sz_zero_t;
     } else {
         return ERROR(100);
@@ -71,4 +72,15 @@ tuple *conv_iasm_file (char *fname) {
     fclose(fptr);
 
     return program;
+}
+
+char *get_external_gpp (char *outpath) {
+    static char command[191] {};
+    char s_outpath[MAX_LINE_SZ * 2];
+    char buffer[MAX_LINE_SZ * 3];
+    memcpy(s_outpath, outpath, MAX_LINE_SZ * sizeof(char));
+    // Can we force the outpath to be absolute or will it always be relative?
+    sprintf(command, "g++ Paws/program.cpp Paws/operations.cpp Paws/interpreter.cpp -o %s -IPaws/include", s_outpath);
+    printf("COMMAND: %s, CURRENT DIR: %s\n", command, getcwd(buffer, sizeof(buffer)));
+    return command;
 }

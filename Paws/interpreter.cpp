@@ -19,7 +19,7 @@ void simulate_program (tuple *program) {
         int operation = program[counter].ptr[0];
         switch (operation) {
 
-            case LFAST32:
+            case LINT32:
                 if (stack_sz > 0) {
                     stackPtr++;
                     stack[stackPtr] = program[counter].ptr[1];

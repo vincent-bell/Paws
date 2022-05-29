@@ -2,9 +2,13 @@
 
 #include <cstdio>
 #include <cassert>
+#include <files.h>
 #include <operations.h>
 
-void compile_program (tuple *program, char *target_filename) {
+#define CCMP(OUTPATH) get_external_gpp(OUTPATH)
+
+void compile_program (tuple *program, char *outpath) {
+    const char *target_filename = "Paws/program.cpp";
     FILE *fptr = fopen(target_filename, "w");
     if (fptr == NULL) {
         fprintf(stderr, "Failed to find the file %s\n", target_filename);
@@ -12,7 +16,6 @@ void compile_program (tuple *program, char *target_filename) {
         exit(1);
     }
 
-    fprintf(fptr, "// include the header libraries\n");
     fprintf(fptr, "#include <cstdio>\n");
     fprintf(fptr, "#include <operations.h>\n");
     fprintf(fptr, "#include <interpreter.h>\n\n");
@@ -25,8 +28,8 @@ void compile_program (tuple *program, char *target_filename) {
         assert(OP_COUNT == 6 && "The number of operations is currently out of sync");
         switch (operation) {
 
-            case LFAST32:
-                fprintf(fptr, "    program[%zu] = LOAD_FAST(%d);\n", counter, program[counter].ptr[1]);
+            case LINT32:
+                fprintf(fptr, "    program[%zu] = LOAD_INT(%d);\n", counter, program[counter].ptr[1]);
                 break;
 
             case I232_PLUS:
@@ -51,5 +54,11 @@ void compile_program (tuple *program, char *target_filename) {
     }
 
     fprintf(fptr, "    simulate_program(program);\n");
+    fprintf(fptr, "    return 0;\n");
     fprintf(fptr, "}\n");
+
+    printf("\033[31mTRYING TO EXEC: \"%s\"\033[0m\n", CCMP(outpath));
+    if (!system(CCMP(outpath))) {
+        printf("Invalid outpath: %s", outpath);
+    }
 }

@@ -8,9 +8,9 @@ typedef struct tuple {
     size_t size;
 } tuple;
 
-enum operations {LFAST32, I232_PLUS, I232_MINUS, I232_MULTIPLY, I232_DUMP, I232_FAIL, OP_COUNT};
+enum operations {LINT32, I232_PLUS, I232_MINUS, I232_MULTIPLY, I232_DUMP, I232_FAIL, OP_COUNT};
 
-tuple LOAD_FAST (long long value);
+tuple LOAD_INT (long long value);
 tuple ADDH (void);
 tuple SUBH (void);
 tuple MULH (void);

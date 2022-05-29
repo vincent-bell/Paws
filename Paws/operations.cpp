@@ -3,11 +3,11 @@
 #include <climits>
 #include <operations.h>
 
-tuple LOAD_FAST (long long value) {
+tuple LOAD_INT (long long value) {
     tuple refTuple;
     refTuple.ptr = (int *) malloc(2 * sizeof(int));
     if (LONG_MIN <= value && value <= LONG_MAX) {
-        refTuple.ptr[0] = LFAST32;
+        refTuple.ptr[0] = LINT32;
         refTuple.ptr[1] = value;
         refTuple.size = 2 * sizeof(int);
     } else {
