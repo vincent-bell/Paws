@@ -27,20 +27,20 @@ The compiler built into Paws currently takes some input file (.iasm) and compile
 If you need a reference for writing programs in the paws programming language refer to the examples folder [here](https://github.com/vincent-bell/Paws-Programming-Language/tree/main/examples)
 
 ## Assembly Instruction Set
-	LOAD_FAST (signed int value)
-	~ Loads a signed 32 bit signed integer directly onto the stack.
+	LOAD_INT (int value)
+	~ Loads a signed 32 bit signed integer onto the stack.
 
 	ADDH (void)
-	~ Pops two values from the top of the stack and adds them together. The result is then loaded onto the stack.
+	~ Pops two values from the top of the stack and adds them together. The result of this addition is then pushed onto the stack.
 
 	SUBH (void)
-	~ Pops two values from the top of the stack and subtracts them. The result is then loaded onto the stack.
+	~ Pops two values from the top of the stack and subtracts them. The result of this subtraction is then pushed onto the stack.
 
 	MULH (void)
-	~ Pops two values from the top of the stack and multiplies theem together. The result is then loaded onto the stack.
+	~ Pops two values from the top of the stack and multiplies them together. The result of this multiplication is then pushed onto the stack.
 
 	DUMP (void)
 	~ Pops the value at the top of the stack and prints it to stdout.
 
 	ERROR (int errid)
-	~ Raises an error which prints a message if the error code is recognized. The program then terminates with exit status 1.
+	~ Raises an error which should print a message if the error code is recognized. The behaviour following this message will depend on the error code.
