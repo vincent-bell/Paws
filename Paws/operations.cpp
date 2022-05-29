@@ -11,7 +11,7 @@ tuple LOAD_INT (long long value) {
         refTuple.ptr[1] = value;
         refTuple.size = 2 * sizeof(int);
     } else {
-        refTuple.ptr[0] = LFAST32;
+        refTuple.ptr[0] = LINT32;
         refTuple.ptr[1] = 0;
         refTuple.size = 2 * sizeof(int);
     }
