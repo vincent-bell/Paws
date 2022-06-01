@@ -3,18 +3,18 @@
 
 #include <cstdio>
 
-typedef struct tuple {
+typedef struct pawsTuple {
     signed int *ptr;
     size_t size;
-} tuple;
+} pawsTuple;
 
 enum operations {LINT32, I232_PLUS, I232_MINUS, I232_MULTIPLY, I232_DUMP, I232_FAIL, OP_COUNT};
 
-tuple LOAD_INT (long long value);
-tuple ADDH (void);
-tuple SUBH (void);
-tuple MULH (void);
-tuple DUMP (void);
-tuple ERROR (int errid);
+pawsTuple LOAD_INT (long long value);
+pawsTuple ADDH (void);
+pawsTuple SUBH (void);
+pawsTuple MULH (void);
+pawsTuple DUMP (void);
+pawsTuple ERROR (int errid);
 
 #endif // OPERATIONS_H_

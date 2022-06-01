@@ -7,7 +7,7 @@
 
 #define CCMP(OUTPATH) get_external_gpp(OUTPATH)
 
-void compile_program (tuple *program, char *outpath) {
+void compile_program (pawsTuple *program, char *outpath) {
     const char *target_filename = "Paws/program.cpp";
     FILE *fptr = fopen(target_filename, "w");
     if (fptr == NULL) {

@@ -9,7 +9,7 @@ void debug_stack (signed int *stack, int pointer) {
     }
 }
 
-void simulate_program (tuple *program) {
+void simulate_program (pawsTuple *program) {
     int stack[64] = {0};
     int stackPtr = 0;
     size_t stack_sz = 0;

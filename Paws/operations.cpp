@@ -3,8 +3,8 @@
 #include <climits>
 #include <operations.h>
 
-tuple LOAD_INT (long long value) {
-    tuple refTuple;
+pawsTuple LOAD_INT (long long value) {
+    pawsTuple refTuple;
     refTuple.ptr = (int *) malloc(2 * sizeof(int));
     if (LONG_MIN <= value && value <= LONG_MAX) {
         refTuple.ptr[0] = LINT32;
@@ -18,40 +18,40 @@ tuple LOAD_INT (long long value) {
     return refTuple;
 }
 
-tuple ADDH (void) {
-    tuple refTuple;
+pawsTuple ADDH (void) {
+    pawsTuple refTuple;
     refTuple.ptr = (int *) malloc(sizeof(int));
     refTuple.ptr[0] = I232_PLUS;
     refTuple.size = sizeof(int);
     return refTuple;
 }
 
-tuple SUBH (void) {
-    tuple refTuple;
+pawsTuple SUBH (void) {
+    pawsTuple refTuple;
     refTuple.ptr = (int *) malloc(sizeof(int));
     refTuple.ptr[0] = I232_MINUS;
     refTuple.size = sizeof(int);
     return refTuple;
 }
 
-tuple MULH (void) {
-    tuple refTuple;
+pawsTuple MULH (void) {
+    pawsTuple refTuple;
     refTuple.ptr = (int *) malloc(sizeof(int));
     refTuple.ptr[0] = I232_MULTIPLY;
     refTuple.size = sizeof(int);
     return refTuple;
 }
 
-tuple DUMP (void) {
-    tuple refTuple;
+pawsTuple DUMP (void) {
+    pawsTuple refTuple;
     refTuple.ptr = (int *) malloc(sizeof(int));
     refTuple.ptr[0] = I232_DUMP;
     refTuple.size = sizeof(int);
     return refTuple;
 }
 
-tuple ERROR (int errid) {
-    tuple refTuple;
+pawsTuple ERROR (int errid) {
+    pawsTuple refTuple;
     refTuple.ptr = (int *) malloc(2 * sizeof(int));
     refTuple.ptr[0] = I232_FAIL;
     refTuple.ptr[1] = errid; // error code

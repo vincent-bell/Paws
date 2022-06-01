@@ -19,7 +19,7 @@ typedef struct retObj {
 char *getTupleContents (size_t size, signed int *ptr) {
     if (ptr == NULL) {
         char *ret_string = (char *) malloc(sizeof(char) );
-        tuple refTuple = ERROR(200); //define some error code for this in documentation soon "pointer to tuple values is null"
+        pawsTuple refTuple = ERROR(200); //define some error code for this in documentation soon "pointer to tuple values is null"
         sprintf(ret_string, "(%d, %d)", refTuple.ptr[0], refTuple.ptr[1]);
         return ret_string;
     } else {
@@ -53,7 +53,7 @@ char *getTupleContents (size_t size, signed int *ptr) {
     }
 }
 
-void debug (tuple *program, char *mode) {
+void debug (pawsTuple *program, char *mode) {
     if (strcmp(mode, "-d") == 0) {
         int i = 0;
         while (program[i].size != 0) {
@@ -120,7 +120,7 @@ retObj evaluateCmdArgs (int argc, char **argv) {
 
 // main program
 int main (int argc, char **argv) {
-    static tuple *program;
+    static pawsTuple *program;
 
     retObj ret = evaluateCmdArgs(argc, argv);
     switch (ret.retcode) {

@@ -7,8 +7,8 @@
 #define MAX_LINE_SZ 23
 #define MAX_PROG_SZ 64
 
-tuple parse_token_as_op (String_View token, size_t position) {
-    tuple sz_zero_t;
+pawsTuple parse_token_as_op (String_View token, size_t position) {
+    pawsTuple sz_zero_t;
     sz_zero_t.size = 0;
 
     char token_str[MAX_LINE_SZ];
@@ -32,8 +32,8 @@ tuple parse_token_as_op (String_View token, size_t position) {
     }
 }
 
-tuple lex_line (char *line) {
-    tuple refTuple;
+pawsTuple lex_line (char *line) {
+    pawsTuple refTuple;
     char tfix[MAX_LINE_SZ];
     strncpy(tfix, line, MAX_LINE_SZ);
 
@@ -53,8 +53,8 @@ tuple lex_line (char *line) {
     return refTuple;
 }
 
-tuple *conv_iasm_file (char *fname) {
-    static tuple program[MAX_PROG_SZ]; 
+pawsTuple *conv_iasm_file (char *fname) {
+    static pawsTuple program[MAX_PROG_SZ]; 
     char buf[MAX_LINE_SZ];
     int line = 0;
 
@@ -74,6 +74,7 @@ tuple *conv_iasm_file (char *fname) {
     return program;
 }
 
+// TODO: fix this... also implement the name change of tuple -> pawsTuple!
 char *get_external_gpp (char *outpath) {
     static char command[191] {};
     char s_outpath[MAX_LINE_SZ * 2];
