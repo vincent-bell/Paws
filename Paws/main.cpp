@@ -83,8 +83,8 @@ rObject evaluateCmdArgs (int argc, char **argv) {
 // main program
 int main (int argc, char **argv) {
     static pawsTuple *program;
-
     retObj ret = evaluateCmdArgs(argc, argv);
+
     switch (ret.retcode) {
 
         case SIM_W_NDEBUG:
@@ -108,5 +108,6 @@ int main (int argc, char **argv) {
             return 1;
 
     }
+
     return 0;
 }
