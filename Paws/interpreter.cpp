@@ -58,13 +58,13 @@ void simulate_program (pawsTuple *program) {
 
             case I232_FAIL:
                 if (program[counter].ptr[1] == 100) {
-                    printf("Invalid token error [100]\n");
+                    fprintf(stderr, "Invalid token error [100]\n");
                 }
                 exit(1);
                 break;
 
             default:
-                printf("Failed to handle unknown opcode %d\n", program[counter].ptr[0]);
+                fprintf(stderr, "Failed to handle unknown opcode %d\n", program[counter].ptr[0]);
                 exit(1);
                 break;
 

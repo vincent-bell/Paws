@@ -11,7 +11,7 @@
 
 enum retcodes {SIM_W_NDEBUG, SIM_W_DEBUG, CMP_W_NDEBUG, NIM_ERROR};
 
-typedef struct retObj {
+typedef struct rObject {
     int retcode;
     char msg[91];
 } retObj;
@@ -28,11 +28,10 @@ void debug (pawsTuple *program, char *mode) {
     }
 }
 
-retObj evaluateCmdArgs (int argc, char **argv) {
-    retObj ret = {};
+rObject evaluateCmdArgs (int argc, char **argv) {
+    rObject ret = {};
     if (argc < 3) {
         fprintf(stderr, "Usage: %s ", USAGE);
-        fflush(stderr);
         exit(1);
     }
 
@@ -106,7 +105,6 @@ int main (int argc, char **argv) {
 
         case NIM_ERROR:
             fprintf(stderr, "[paws] An unknown error occured...\n");
-            fflush(stderr);
             return 1;
 
     }
