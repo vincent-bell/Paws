@@ -10,6 +10,7 @@ typedef struct pawsTuple {
 
 enum operations {LINT32, I232_PLUS, I232_MINUS, I232_MULTIPLY, I232_DUMP, I232_FAIL, OP_COUNT};
 
+char* getTupleContents(size_t size, int* ptr);
 pawsTuple LOAD_INT (long long value);
 pawsTuple ADDH (void);
 pawsTuple SUBH (void);

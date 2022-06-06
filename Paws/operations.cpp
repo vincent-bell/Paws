@@ -1,7 +1,45 @@
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <climits>
 #include <operations.h>
+
+char *getTupleContents (size_t size, int *ptr) {
+    if (ptr == NULL) {
+        char *ret_string = (char *) malloc(sizeof(char) );
+        pawsTuple refTuple = ERROR(200); //define some error code for this in documentation soon "pointer to tuple values is null"
+        sprintf(ret_string, "(%d, %d)", refTuple.ptr[0], refTuple.ptr[1]);
+        return ret_string;
+    } else {
+        char *ret_string = (char *) malloc(sizeof(char) + 1);
+        strcpy(ret_string, "(");
+        size_t i = 0;
+        while (i < size/4 - 1) {
+            char strnum[11];
+            sprintf(strnum, "%d", *(ptr + i));
+            size_t numsz = strlen(strnum);
+            char *tmp = (char *) malloc(sizeof(char) * numsz + 2);
+            ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + 2);
+            sprintf(tmp, "%s, ", strnum);
+            strncat(ret_string, tmp, 13);
+            free(tmp);
+            i++;
+        }
+        char strnum[11];
+        sprintf(strnum, "%d", *(ptr + i));
+        size_t fnumsz = strlen(strnum);
+        ret_string = (char *) realloc(ret_string, sizeof(char) * 13 * (i+1) + fnumsz + 3);
+        char tmp[fnumsz+1];
+        if (i == 0) {
+            sprintf(tmp, "%s, )", strnum);
+            strncat(ret_string, tmp, 15);
+        } else {
+            sprintf(tmp, "%s)", strnum);
+            strncat(ret_string, tmp, 13);
+        }
+        return ret_string;
+    }
+}
 
 pawsTuple LOAD_INT (long long value) {
     pawsTuple refTuple;
