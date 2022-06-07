@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <unistd.h>
 #include <operations.h>
 #define SV_IMPLEMENTATION
 #include <sv.h>
@@ -76,11 +75,9 @@ pawsTuple *conv_iasm_file (char *fname) {
 
 // @ TODO
 char *get_external_gpp (char *outpath) {
-    static char command[191] = {};
-    char s_outpath[MAX_LINE_SZ * 2];
-    char buffer[MAX_LINE_SZ * 3];
-    memcpy(s_outpath, outpath, MAX_LINE_SZ * sizeof(char));
-    sprintf(command, "gcc Paws/program.c Paws/operations.c Paws/interpreter.c -o %s -IPaws/include", s_outpath);
-    printf("COMMAND: %s, CURRENT DIR: %s\n", command, getcwd(buffer, sizeof(buffer)));
+    static char command[75 + MAX_LINE_SZ];
+    char sf_outpath[MAX_LINE_SZ];
+    memcpy(sf_outpath, outpath, MAX_LINE_SZ * sizeof(char));
+    sprintf(command, "gcc Paws/program.c Paws/operations.c Paws/interpreter.c -o %s -IPaws/include", sf_outpath);
     return command;
 }
