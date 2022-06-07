@@ -1,7 +1,7 @@
 #ifndef OPERATIONS_H_
 #define OPERATIONS_H_
 
-#include <cstdio>
+#include <stdio.h>
 
 typedef struct pawsTuple {
     signed int *ptr;

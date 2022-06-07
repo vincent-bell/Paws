@@ -1,2 +1,2 @@
 default:
-	g++ Paws/main.cpp Paws/operations.cpp Paws/interpreter.cpp Paws/compiler.cpp Paws/files.cpp -o paws.exe -IPaws/include -Wall -Wextra
+	gcc Paws/main.c Paws/operations.c Paws/interpreter.c Paws/compiler.c Paws/files.c -o paws.exe -IPaws/include -Wall -Wextra

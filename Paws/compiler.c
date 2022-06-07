@@ -1,14 +1,14 @@
 // Paws compiler v0.2.0 alpha
 
-#include <cstdio>
-#include <cassert>
+#include <stdio.h>
+#include <assert.h>
 #include <files.h>
 #include <operations.h>
 
 #define CCMP(OUTPATH) get_external_gpp(OUTPATH)
 
 void compile_program (pawsTuple *program, char *outpath) {
-    const char *target_filename = "Paws/program.cpp";
+    const char *target_filename = "Paws/program.c";
     FILE *fptr = fopen(target_filename, "w");
     if (fptr == NULL) {
         fprintf(stderr, "Failed to find the file %s\n", target_filename);

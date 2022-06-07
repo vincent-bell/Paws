@@ -1,7 +1,7 @@
 // include the header libraries
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <operations.h>
 #include <interpreter.h>
 #include <compiler.h>
@@ -11,7 +11,7 @@
 
 enum retcodes {SIM_W_NDEBUG, SIM_W_DEBUG, CMP_W_NDEBUG, NIM_ERROR};
 
-typedef struct rObject {
+typedef struct robject {
     int retcode;
     char msg[91];
 } retObj;
@@ -28,8 +28,8 @@ void debug (pawsTuple *program, char *mode) {
     }
 }
 
-rObject evaluateCmdArgs (int argc, char **argv) {
-    rObject ret = {};
+retObj evaluateCmdArgs (int argc, char **argv) {
+    retObj ret = {};
     if (argc < 3) {
         fprintf(stderr, "Usage: %s ", USAGE);
         exit(1);

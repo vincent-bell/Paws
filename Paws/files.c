@@ -1,4 +1,4 @@
-#include <cstdio>
+#include <stdio.h>
 #include <unistd.h>
 #include <operations.h>
 #define SV_IMPLEMENTATION
@@ -74,14 +74,13 @@ pawsTuple *conv_iasm_file (char *fname) {
     return program;
 }
 
-// TODO: fix this... also implement the name change of tuple -> pawsTuple!
+// @ TODO
 char *get_external_gpp (char *outpath) {
-    static char command[191] {};
+    static char command[191] = {};
     char s_outpath[MAX_LINE_SZ * 2];
     char buffer[MAX_LINE_SZ * 3];
     memcpy(s_outpath, outpath, MAX_LINE_SZ * sizeof(char));
-    // Can we force the outpath to be absolute or will it always be relative?
-    sprintf(command, "g++ Paws/program.cpp Paws/operations.cpp Paws/interpreter.cpp -o %s -IPaws/include", s_outpath);
+    sprintf(command, "gcc Paws/program.c Paws/operations.c Paws/interpreter.c -o %s -IPaws/include", s_outpath);
     printf("COMMAND: %s, CURRENT DIR: %s\n", command, getcwd(buffer, sizeof(buffer)));
     return command;
 }

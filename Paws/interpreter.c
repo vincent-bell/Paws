@@ -1,6 +1,6 @@
 // Paws interpreter v0.2.0 alpha
 
-#include <cstdlib>
+#include <stdlib.h>
 #include <operations.h>
 
 void debug_stack (signed int *stack, int pointer) {
